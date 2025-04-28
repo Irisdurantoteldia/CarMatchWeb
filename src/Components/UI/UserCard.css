@@ -1,0 +1,45 @@
+.user-card {
+  display: flex;
+  padding: 12px;
+  background: white;
+  border-bottom: 1px solid #F0F2F5;
+  cursor: pointer;
+}
+
+.avatar-container {
+  position: relative;
+  margin-right: 12px;
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.info-container {
+  flex: 1;
+  justify-content: center;
+}
+
+.name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.timestamp {
+  font-size: 12px;
+}
+
+.message-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-preview {
+  flex: 1;
+  font-size: 14px;
+}

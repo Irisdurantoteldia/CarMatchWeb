@@ -1,0 +1,55 @@
+.routes-layout {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.routes-content {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.routes-card {
+  margin-bottom: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.trip-card {
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.trip-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.trip-header {
+  display: flex;
+  align-items: flex-start;
+}
+
+.location-icon {
+  font-size: 24px;
+  color: #1890ff;
+  margin-right: 16px;
+  margin-top: 4px;
+}
+
+.trip-info {
+  flex: 1;
+}
+
+.trip-date {
+  display: block;
+  margin-top: 8px;
+}
+
+.empty-state {
+  padding: 48px 0;
+}

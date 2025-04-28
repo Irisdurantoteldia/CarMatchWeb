@@ -1,0 +1,69 @@
+.schedule-layout {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.schedule-content {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.schedule-card {
+  margin-bottom: 24px;
+}
+
+.schedule-section {
+  margin-bottom: 16px;
+}
+
+.schedule-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.input-container {
+  width: 100%;
+}
+
+.time-input {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.time-picker {
+  width: 100%;
+}
+
+.preferences-section {
+  margin-top: 24px;
+}
+
+.save-button {
+  margin-top: 24px;
+}
+
+.day-container {
+  margin-bottom: 16px;
+}
+
+.day-title {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.time-input {
+  flex: 1;
+}

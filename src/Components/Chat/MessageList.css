@@ -1,0 +1,30 @@
+.messages-container {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  height: calc(100vh - 180px);
+}
+
+.messages-container.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-row {
+  margin: 2px 0;
+  display: flex;
+}
+
+.my-message {
+  justify-content: flex-end;
+}
+
+.other-message {
+  justify-content: flex-start;
+}

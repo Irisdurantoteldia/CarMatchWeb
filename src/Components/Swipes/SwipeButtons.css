@@ -1,0 +1,67 @@
+/* Variables */
+:root {
+  --primary-color: #1890ff;
+  --secondary-color: #52c41a;
+  --danger-color: #ff4d4f;
+  --background-color: #f5f8fa;
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+/* Swipe Buttons Container */
+.swipe-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 1.5rem;
+}
+
+/* Swipe Buttons */
+.swipe-button {
+  width: 70px !important;
+  height: 70px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  border: none !important;
+}
+
+.swipe-button:hover {
+  transform: scale(1.1);
+}
+
+.swipe-button.like {
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+}
+
+.swipe-button.dislike {
+  background-color: var(--danger-color) !important;
+  color: white !important;
+}
+
+.swipe-button .anticon {
+  font-size: 28px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .swipe-buttons-container {
+    gap: 2rem;
+  }
+
+  .swipe-button {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .swipe-button .anticon {
+    font-size: 24px;
+  }
+}

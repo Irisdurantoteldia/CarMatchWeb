@@ -1,0 +1,378 @@
+/* Variables */
+:root {
+  --primary-color: #1890ff;
+  --secondary-color: #4cd964;
+  --danger-color: #ff6b6b;
+  --background-color: #eef5ff;
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --border-radius: 20px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+/* Layout */
+.swipes-layout {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.swipes-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Card Container */
+.card-container {
+  width: 100%;
+  position: relative;
+  transition: transform 0.3s ease;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  will-change: transform;
+}
+
+.card-container:active {
+  cursor: grabbing;
+  transition: none;
+}
+
+/* Indicadores visuales para el arrastre */
+.card-container[data-dragging="left"]::before,
+.card-container[data-dragging="right"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.card-container[data-dragging="left"]::before {
+  background: linear-gradient(90deg, var(--secondary-color) 0%, transparent 100%);
+}
+
+.card-container[data-dragging="right"]::before {
+  background: linear-gradient(-90deg, var(--danger-color) 0%, transparent 100%);
+}
+
+.swipe-buttons {
+  display: flex;
+  justify-content: space-between; /* Canviat de gap a space-between */
+  width: 100%;
+  max-width: 300px; /* Limitar l'amplada màxima */
+  padding: 0 1rem;
+}
+
+/* Afegir indicadors visuals per l'arrossegament */
+.card-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--danger-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-container[data-dragging="left"]::before {
+  opacity: 0.5;
+}
+
+.card-container[data-dragging="right"]::after {
+  opacity: 0.5;
+}
+
+/* Swipe Card */
+.swipe-card {
+  width: 100%;
+  border-radius: var(--border-radius) !important;
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  background-color: var(--card-background);
+  border: none !important;
+  margin-bottom: 1.5rem;
+}
+
+.swipe-card .ant-card-body {
+  padding: 0 !important;
+}
+
+/* User Header Section */
+.user-header-section {
+  display: flex;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-photo-container {
+  margin-right: 1.5rem;
+}
+
+.profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-basic-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-color);
+}
+
+.role-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+/* Info Items */
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.info-item .anticon {
+  color: var(--primary-color);
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+.info-text {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Schedule Section */
+.schedule-section {
+  padding: 1.5rem;
+}
+
+.schedule-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.schedule-header .anticon {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  margin-right: 0.75rem;
+}
+
+.schedule-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.no-schedule {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
+
+.view-detailed {
+  color: var(--primary-color);
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.view-detailed .anticon {
+  margin-right: 0.5rem;
+}
+
+/* Expand Button */
+.expand-button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: none;
+  z-index: 10;
+}
+
+.expand-button .anticon {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.swipe-buttons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.swipe-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: var(--transition);
+}
+
+.swipe-button:hover {
+  transform: scale(1.1);
+}
+
+.swipe-button.like {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.swipe-button.dislike {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.swipe-button .anticon {
+  font-size: 24px;
+}
+
+/* Loading Container */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+
+/* Empty State */
+.ant-empty {
+  margin: 3rem 0;
+}
+
+.ant-empty .ant-empty-description {
+  color: var(--text-secondary);
+}
+
+.ant-empty .ant-empty-description h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.ant-empty .ant-empty-description p {
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .swipes-layout {
+    padding: 1rem;
+  }
+
+  .swipes-content {
+    max-width: 100%;
+  }
+
+  .user-header-section {
+    padding: 1rem;
+  }
+
+  .profile-photo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .schedule-section {
+    padding: 1rem;
+  }
+}
+
+.schedule-summary {
+  margin: 1rem 0;
+}
+
+.schedule-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.day-info {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.time-info {
+  color: var(--text-secondary);
+}

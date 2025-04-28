@@ -1,0 +1,28 @@
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border-top: 1px solid #e5e5e5;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trip-button {
+  margin-right: 10px;
+}
+
+.message-input {
+  flex: 1;
+  margin: 0 10px;
+  border-radius: 20px;
+}
+
+.send-button {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

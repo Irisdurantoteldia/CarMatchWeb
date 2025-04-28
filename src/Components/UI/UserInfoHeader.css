@@ -1,0 +1,36 @@
+.user-header {
+  width: 100%;
+  max-width: 280px;
+}
+
+.user-header-content {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.user-avatar {
+  margin-right: 12px;
+  background-color: #f0f0f0;
+}
+
+.user-info {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.user-name {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.status-text {
+  color: #4CAF50;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.arrow-icon {
+  color: #666;
+  font-size: 24px;
+}

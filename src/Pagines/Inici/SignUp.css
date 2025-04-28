@@ -1,0 +1,51 @@
+.signup-layout {
+  min-height: 100vh;
+  background-color: #EEF5FF;
+}
+
+.signup-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.signup-steps {
+  margin-bottom: 24px;
+}
+
+.error-alert {
+  margin-bottom: 24px;
+}
+
+.signup-form {
+  margin-top: 24px;
+}
+
+.steps-action {
+  margin-top: 24px;
+  text-align: right;
+}
+
+.ant-btn-primary {
+  background-color: #333c87;
+}
+
+.ant-steps-item-process .ant-steps-item-icon {
+  background-color: #333c87;
+  border-color: #333c87;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon {
+  border-color: #333c87;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon .ant-steps-icon {
+  color: #333c87;
+}

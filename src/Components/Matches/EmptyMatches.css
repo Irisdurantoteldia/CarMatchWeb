@@ -1,0 +1,19 @@
+.empty-matches-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 100%;
+}
+
+.empty-matches-container h3 {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.empty-matches-container p {
+  color: #666;
+  margin-bottom: 20px;
+}

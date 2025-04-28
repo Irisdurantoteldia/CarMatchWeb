@@ -1,0 +1,43 @@
+.eula-layout {
+  min-height: 100vh;
+  background-color: #EEF5FF;
+}
+
+.eula-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+.logo {
+  width: 200px;
+  height: 200px;
+  margin-top: 20px;
+}
+
+.eula-card {
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.title-red {
+  color: #b81414;
+}
+
+.terms-content {
+  margin: 24px 0;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 16px;
+}
+
+.final-note {
+  margin-top: 24px;
+  font-style: italic;
+}

@@ -1,0 +1,25 @@
+.driver-options {
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.driver-options .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.driver-options .ant-menu-item {
+  height: 50px;
+  line-height: 50px;
+  margin: 0;
+  border-radius: 0;
+}
+
+.driver-options .ant-menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+.driver-options .anticon {
+  font-size: 18px;
+  margin-right: 12px;
+}

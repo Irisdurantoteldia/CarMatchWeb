@@ -1,0 +1,392 @@
+:root {
+  --primary-color: #1890ff;
+  --secondary-color: #52c41a;
+  --background-color: #EEF5FF;
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+/* Global Styles */
+.search-page {
+  background-color: transparent;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Search Container */
+.search-container {
+  width: 100%;
+  max-width: 1200px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  background-color: var(--card-background);
+  border: none;
+  margin: 0 auto;
+}
+
+.search-container .ant-card-body {
+  padding: 0;
+}
+
+/* Search Header */
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(to right, #f7f9fc, #edf2f7);
+}
+
+.search-header h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.filter-button {
+  height: 40px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(24, 144, 255, 0.2);
+}
+
+/* Search Content */
+.search-content {
+  padding: 1.5rem 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Search Fields */
+.search-fields {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+  align-items: center;
+}
+
+.search-field-selector {
+  width: 180px;
+  border-radius: 8px;
+}
+
+.search-input {
+  flex: 1;
+  border-radius: 8px;
+}
+
+.search-input .ant-input {
+  line-height: 40px;
+  padding: 0 11px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input .ant-input-search-button {
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loading Container */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.empty-state svg {
+  color: #d9d9d9;
+  margin-bottom: 1rem;
+}
+
+/* Users List */
+.users-list {
+  width: 100%;
+}
+
+.users-list .ant-list-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 0.5rem;
+}
+
+/* User Card */
+.user-card {
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: var(--border-radius);
+  background-color: var(--card-background);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px solid #f0f0f0;
+}
+
+.user-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+/* Eliminar user-card-content ya que no lo necesitamos */
+.user-card-content {
+  display: none;
+}
+
+/* Ajustar user-info para que sea el contenedor principal */
+.user-info {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  width: 100%;
+  align-items: flex-start;
+}
+
+/* Asegurar que la foto de usuario esté correctamente centrada */
+.user-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+/* Ajustar los detalles del usuario */
+.user-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Asegurar que el nombre del usuario esté correctamente alineado */
+.user-name {
+  margin: 0 !important;
+  font-size: 1.25rem !important;
+  line-height: 1.4 !important;
+}
+
+.role-tag {
+  align-self: flex-start;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+/* Info Rows */
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.info-icon {
+  color: var(--primary-color);
+}
+
+.car-info {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #f0f0f0;
+}
+
+/* Filters Modal */
+.filters-modal .ant-modal-content {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.filters-modal .ant-modal-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(to right, #f7f9fc, #edf2f7);
+}
+
+.filters-modal .ant-modal-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.filters-modal .ant-modal-body {
+  padding: 1.5rem;
+}
+
+.filters-modal .ant-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* Filter Content */
+.filter-content {
+  width: 100%;
+}
+
+.filter-section {
+  margin-bottom: 1.25rem;
+}
+
+.filter-section h5 {
+  margin-bottom: 0.5rem !important;
+  font-weight: 500;
+}
+
+.filter-input,
+.filter-select {
+  border-radius: 8px;
+}
+
+.filter-icon {
+  color: var(--primary-color);
+}
+
+.reset-button {
+  border-radius: 8px;
+}
+
+.apply-button {
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(24, 144, 255, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .users-list .ant-list-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .search-page {
+    padding: 1rem;
+  }
+
+  .search-header {
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .search-fields {
+    flex-direction: column;
+  }
+
+  .search-field-selector {
+    width: 100%;
+  }
+
+  .users-list .ant-list-items {
+    grid-template-columns: 1fr;
+  }
+
+  .user-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .user-details {
+    align-items: center;
+  }
+
+  .info-row {
+    justify-content: center;
+  }
+
+  .search-input .ant-input,
+  .search-input .ant-input-search-button {
+    height: 38px;
+    line-height: 38px;
+  }
+
+  /* Corrección para eliminar los fondos azules y hacer los iconos más pequeños */
+  .info-row .anticon,
+  .car-info .anticon,
+  .info-icon {
+    font-size: 12px !important;
+    color: #8899aa !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  /* Reducir drásticamente el espacio entre filas */
+  .info-row,
+  .car-info .info-row {
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    min-height: auto !important;
+  }
+  
+  /* Hacer el contenedor de información más compacto */
+  .user-details {
+    gap: 4px !important;
+  }
+  
+  /* Eliminar el espacio superior del primer elemento info-row */
+  .user-details .info-row:first-child {
+    margin-top: 0 !important;
+  }
+  
+  /* Eliminar la separación del car-info */
+  .car-info {
+    margin-top: 4px !important;
+    padding-top: 2px !important;
+    border-top: none !important;
+  }
+  
+  /* Asegurar que no hay estilos extraños en los iconos */
+  .user-details .anticon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto !important;
+    min-height: auto !important;
+  }
+}

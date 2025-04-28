@@ -1,0 +1,76 @@
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-sider {
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-container {
+  height: 75px;
+  padding: 13px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+.collapse-button {
+  position: fixed;
+  left: 208px;
+  top: 16px;
+  width: 32px;
+  height: 32px;
+  background: #001529;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  transition: all 0.2s;
+}
+
+.ant-layout-sider-collapsed + .ant-layout .collapse-button {
+  left: 88px;
+}
+
+.collapse-button:hover {
+  background: #002140;
+  color: #1890ff;
+}
+
+.main-content {
+  margin-left: 200px;
+  padding: 24px;
+  transition: all 0.2s;
+  background-color: #EEF5FF;
+}
+
+.ant-layout-sider-collapsed + .ant-layout .main-content {
+  margin-left: 80px;
+}
+
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    position: fixed;
+    left: 0;
+  }
+  
+  .main-content {
+    margin-left: 80px;
+    padding: 16px;
+  }
+  
+  .collapse-button {
+    left: 88px;
+  }
+}
