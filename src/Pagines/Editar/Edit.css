@@ -1,311 +1,247 @@
-/* Edit.css - Diseño sofisticado para app de carsharing */
+/* Estilos para la página de edición con los colores de la app */
 
 :root {
   --primary-color: #3563E9;
-  --secondary-color: #2653CC;
-  --accent-color: #54B435;
+  --secondary-color: #54B435;
+  --accent-color: #D4AF37;
   --dark-color: #1A202C;
   --light-color: #F9FAFB;
-  --gradient-bg: linear-gradient(135deg, #051952 0%, #0e2155 100%);
+  --gradient-bg: linear-gradient(135deg, #002140 0%, #09426d 100%);
   --card-radius: 16px;
+  
+  /* Colores derivados */
+  --primary-light: rgba(53, 99, 233, 0.1);
+  --secondary-light: rgba(84, 180, 53, 0.1);
+  --accent-light: rgba(212, 175, 55, 0.1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
 }
 
+/* Estructura base */
 .edit-layout {
   background-color: #EEF5FF;
-  min-height: 100vh;
-  padding: 3rem 2rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.edit-layout::before {
-  content: '';
-  position: absolute;
-  width: 40vw;
-  height: 40vw;
-  border-radius: 50%;
-  filter: blur(80px);
-  top: -20vw;
-  right: -20vw;
-  z-index: 0;
+  min-height: calc(100vh - 64px);
 }
 
 .edit-content {
-  max-width: 900px;
+  padding: 32px;
+  max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 1.5rem;
-  position: relative;
-  z-index: 1;
 }
 
-.profile-section,
-.settings-section {
-  border-radius: var(--card-radius);
-  background: white;
-  border: none;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Cabecera de la página */
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
 }
 
-.profile-section:hover,
-.settings-section:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
-}
-
-.profile-section .ant-card-head,
-.settings-section .ant-card-head {
-  background: var(--gradient-bg);
-  border-bottom: none;
-  color: white;
-}
-
-.profile-section .ant-card-head-title,
-.settings-section .ant-card-head-title {
-  font-weight: 700;
-  font-size: 1.25rem;
-}
-
-.profile-section .ant-menu,
-.settings-section .ant-menu {
-  border: none;
-  background: transparent;
-}
-
-.profile-section .ant-menu-item,
-.settings-section .ant-menu-item {
-  height: 60px;
-  line-height: 60px;
-  border-radius: 12px;
-  margin: 0.5rem 0;
-  transition: all 0.3s ease;
-}
-
-.profile-section .ant-menu-item:hover,
-.settings-section .ant-menu-item:hover {
-  background-color: rgba(53, 99, 233, 0.05);
-  color: var(--primary-color);
-}
-
-.profile-section .ant-menu-item-selected,
-.settings-section .ant-menu-item-selected {
-  background-color: rgba(53, 99, 233, 0.1) !important;
-  color: var(--primary-color) !important;
-}
-
-.profile-section .ant-menu-item .anticon,
-.settings-section .ant-menu-item .anticon {
-  margin-right: 1rem;
-  font-size: 1.25rem;
-  color: var(--primary-color);
-}
-
-/* Estilo específico para las opciones de conductor y pasajero */
-.driver-options,
-.passenger-options {
-  border-radius: var(--card-radius);
-  background: white;
-  border: none;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-  position: relative;
-}
-
-.driver-options::before,
-.passenger-options::before {
-  content: '';
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(53, 99, 233, 0.04), transparent 70%);
-  border-radius: 50%;
-  top: -150px;
-  right: -150px;
-  z-index: 0;
-}
-
-.driver-options .ant-card-head,
-.passenger-options .ant-card-head {
-  background: white;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  position: relative;
-  z-index: 1;
-}
-
-.driver-options .ant-card-head-title,
-.passenger-options .ant-card-head-title {
-  color: var(--dark-color);
-  font-weight: 700;
-  font-size: 1.25rem;
-}
-
-.driver-options .ant-card-body,
-.passenger-options .ant-card-body {
-  position: relative;
-  z-index: 1;
-}
-
-/* Estilo para el spinner de carga */
-.edit-content .ant-spin {
-  margin: 4rem auto;
-  display: block;
-}
-
-.edit-content .ant-spin-dot i {
-  background-color: var(--primary-color);
-}
-
-.edit-content .ant-spin-text {
-  color: var(--primary-color);
-  font-weight: 500;
-  margin-top: 1rem;
-}
-
-/* Estilo para botones y acciones */
-.action-button {
-  height: 48px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+.edit-title-section h2 {
+  margin-bottom: 4px !important;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.action-button.primary {
-  background: var(--gradient-bg);
-  color: white;
-  border: none;
-  box-shadow: 0 6px 15px rgba(53, 99, 233, 0.2);
-}
-
-.action-button.primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(53, 99, 233, 0.3);
-}
-
-.action-button.secondary {
-  background: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-}
-
-.action-button.secondary:hover {
-  background: rgba(53, 99, 233, 0.05);
-  transform: translateY(-3px);
-}
-
-.action-button .anticon {
-  margin-right: 0.75rem;
-  font-size: 1.25rem;
-}
-
-/* Estilo para mensajes de error y alertas */
-.ant-alert {
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-}
-
-/* Estilo para tarjetas sin título */
-.plain-card {
-  border-radius: var(--card-radius);
-  background: white;
-  border: none;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-}
-
-/* Estilo para implementar en los componentes DriverOptions y PassengerOptions */
-.option-card {
-  border-radius: var(--card-radius);
-  background: white;
-  border: none;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-
-.option-card .ant-card-head {
-  background: rgba(53, 99, 233, 0.02);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.option-card .ant-card-head-title {
+  gap: 12px;
+  font-size: 28px;
   color: var(--dark-color);
+}
+
+/* Badge de rol */
+.edit-role-badge {
+  display: flex;
+  align-items: center;
+}
+
+.role-badge {
+  padding: 8px 20px;
+  border-radius: 24px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
 }
 
-.option-menu .ant-menu-item {
-  height: 60px;
-  line-height: 60px;
-  border-radius: 12px;
-  margin: 0.5rem 0;
-  transition: all 0.3s ease;
+.role-badge.conductor {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
 }
 
-.option-menu .ant-menu-item .anticon {
-  margin-right: 1rem;
-  font-size: 1.25rem;
+.role-badge.passatger {
+  background-color: var(--secondary-light);
+  color: var(--secondary-color);
 }
 
-.option-menu .ant-menu-item-selected {
-  background-color: rgba(53, 99, 233, 0.1) !important;
-  color: var(--primary-color) !important;
+/* Estado de carga */
+.edit-loading {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Efecto especial para las tarjetas de opciones */
-.option-card {
-  position: relative;
+.edit-loading p {
+  margin-top: 16px;
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+/* Secciones */
+.edit-section {
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title {
+  margin-bottom: 24px !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--dark-color);
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Bloques de opciones uniformes */
+.edit-option-block {
+  height: 220px;
+  border-radius: var(--card-radius);
   overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.03);
+  background-color: white;
+  position: relative;
+  z-index: 1;
 }
 
-.option-card::after {
+.edit-option-block::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 6px;
+  height: 100%;
+  box-shadow: var(--shadow-xl);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: -1;
+  border-radius: var(--card-radius);
+}
+
+.edit-option-block:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.edit-option-block:hover::after {
+  opacity: 1;
+}
+
+.edit-option-block .ant-card-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Iconos de opciones */
+.option-icon {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
   background: var(--gradient-bg);
+  color: white;
+  transition: all 0.3s ease;
 }
 
-/* Adaptaciones para diferentes tamaños de pantalla */
-@media (min-width: 768px) {
+.edit-option-block:hover .option-icon {
+  height: 100px;
+  font-size: 42px;
+}
+
+/* Contenido de los bloques */
+.option-content {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.option-content h4 {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--dark-color);
+  transition: color 0.3s ease;
+}
+
+.edit-option-block:hover .option-content h4 {
+  color: var(--primary-color);
+}
+
+.option-content .ant-typography {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+/* Overrides para componentes Ant Design */
+.ant-btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+}
+
+/* Cursor pointer explícito */
+.edit-option-block {
+  cursor: pointer !important;
+}
+
+/* Responsividad */
+@media (max-width: 1200px) {
+  .edit-section {
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 768px) {
+  .edit-section {
+    max-width: 100%;
+  }
+  
   .edit-content {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "profile driver"
-      "settings settings";
+    padding: 16px;
   }
   
-  .profile-section {
-    grid-area: profile;
+  .edit-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
   
-  .driver-options,
-  .passenger-options {
-    grid-area: driver;
+  .edit-role-badge {
+    align-self: flex-start;
   }
   
-  .settings-section {
-    grid-area: settings;
-  }
-}
-
-@media (max-width: 767px) {
-  .edit-layout {
-    padding: 2rem 1rem;
+  .edit-option-block {
+    height: 200px;
   }
   
-  .profile-section,
-  .settings-section,
-  .driver-options,
-  .passenger-options {
-    margin-bottom: 1.5rem;
+  .option-icon {
+    height: 80px;
+  }
+  
+  .edit-option-block:hover .option-icon {
+    height: 90px;
   }
 }

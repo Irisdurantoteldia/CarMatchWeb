@@ -15,3 +15,38 @@
   align-items: center;
   min-height: 200px;
 }
+
+.unavailability-list-layout {
+  min-height: 100vh;
+  background: #EEF5FF;
+}
+
+.unavailability-list-content {
+  padding: 48px 0;
+}
+
+.unavailability-list-card {
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  padding: 48px;
+  background: #fff;
+  min-height: 600px;
+}
+
+.unavailability-list-title {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.unavailability-list-divider {
+  margin: 24px 0;
+}
+
+.unavailability-list-btn {
+  font-size: 18px;
+  padding: 10px 32px;
+}
+
+.unavailability-list-card .ant-card {
+  margin-bottom: 16px;
+}

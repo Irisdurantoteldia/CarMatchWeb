@@ -10,16 +10,19 @@
   z-index: 100;
 }
 
-.logo-container {
+.logo-container-ML {
   height: 75px;
   padding: 13px;
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.logo {
-  height: 50px;
+.logo-ML {
+  height: 60px;
   width: auto;
 }
 

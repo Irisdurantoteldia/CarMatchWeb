@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Card, List, Tag, Button, Popconfirm, Typography, Alert, Spin, Space, Empty } from "antd";
+import { useNavigate } from 'react-router-dom';
+import { Layout, Card, List, Tag, Button, Popconfirm, Typography, Alert, Spin, Space, Empty, Row, Col, Divider, message } from "antd";
 import { PlusOutlined, DeleteOutlined, CalendarOutlined } from '@ant-design/icons';
 import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db, auth } from "../../FireBase/FirebaseConfig";
@@ -8,7 +9,8 @@ import './UnavailabilityList.css';
 const { Content } = Layout;
 const { Text, Title } = Typography;
 
-const UnavailabilityList = ({ navigate }) => {
+const UnavailabilityList = () => {
+  const navigate = useNavigate();
   const [unavailabilities, setUnavailabilities] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +48,7 @@ const UnavailabilityList = ({ navigate }) => {
       setUnavailabilities(unavailabilityList);
     } catch (error) {
       console.error("Error fetching unavailabilities:", error);
-      Alert.error("No s'han pogut carregar les indisponibilitats");
+      message.error("No s'han pogut carregar les indisponibilitats");
     } finally {
       setLoading(false);
     }
@@ -57,10 +59,10 @@ const UnavailabilityList = ({ navigate }) => {
       setLoading(true);
       await deleteDoc(doc(db, "dailyOverride", id));
       setUnavailabilities((prev) => prev.filter((item) => item.id !== id));
-      Alert.success("Indisponibilitat eliminada correctament");
+      message.success("Indisponibilitat eliminada correctament");
     } catch (error) {
       console.error("Error deleting unavailability:", error);
-      Alert.error("No s'ha pogut eliminar la indisponibilitat");
+      message.error("No s'ha pogut eliminar la indisponibilitat");
     } finally {
       setLoading(false);
     }
@@ -80,80 +82,100 @@ const UnavailabilityList = ({ navigate }) => {
   };
 
   return (
-    <Layout className="unavailability-list">
-      <Content className="unavailability-content">
-        <Card
-          title="Les meves indisponibilitats"
-          extra={
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => navigate('/driver-unavailability')}
+    <Layout style={{ minHeight: "100vh", background: "#EEF5FF" }}>
+      <Content style={{ padding: "48px 0" }}>
+        <Row justify="center">
+          <Col xs={24} sm={22} md={20} lg={18} xl={16} xxl={14}>
+            <Card
+              style={{
+                borderRadius: 18,
+                boxShadow: "0 8px 32px rgba(0,0,0,0.10)",
+                padding: 56,
+                background: "#fff",
+                minHeight: 600,
+              }}
+              bodyStyle={{ padding: 0 }}
+              title={
+                <Title level={2} style={{ textAlign: "left", marginBottom: 0 }}>
+                  Les meves indisponibilitats
+                </Title>
+              }
+              extra={
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  size="large"
+                  onClick={() => navigate('/edit/driver-unavailability')}
+                >
+                  Nova Indisponibilitat
+                </Button>
+              }
             >
-              Nova Indisponibilitat
-            </Button>
-          }
-        >
-          {loading ? (
-            <div className="loading-container">
-              <Spin size="large" tip="Carregant..." />
-            </div>
-          ) : (
-            <List
-              dataSource={unavailabilities}
-              renderItem={(item) => {
-                const active = isActive(item);
-                return (
-                  <List.Item
-                    actions={[
-                      <Popconfirm
-                        title="Estàs segur que vols eliminar aquesta indisponibilitat?"
-                        onConfirm={() => handleDeleteUnavailability(item.id)}
-                        okText="Sí"
-                        cancelText="No"
+              <Divider />
+              {loading ? (
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 200 }}>
+                  <Spin size="large" />
+                </div>
+              ) : (
+                <List
+                  dataSource={unavailabilities}
+                  renderItem={(item) => {
+                    const active = isActive(item);
+                    return (
+                      <Card
+                        style={{ marginBottom: 16 }}
+                        bodyStyle={{ padding: 16 }}
+                        actions={[
+                          <Popconfirm
+                            title="Estàs segur que vols eliminar aquesta indisponibilitat?"
+                            onConfirm={() => handleDeleteUnavailability(item.id)}
+                            okText="Sí"
+                            cancelText="No"
+                          >
+                            <Button type="text" danger icon={<DeleteOutlined />} />
+                          </Popconfirm>
+                        ]}
                       >
-                        <Button type="text" danger icon={<DeleteOutlined />} />
-                      </Popconfirm>
-                    ]}
-                  >
-                    <List.Item.Meta
-                      avatar={<CalendarOutlined style={{ fontSize: '24px' }} />}
-                      title={
-                        <Space>
-                          <Text>{formatDate(item.startDate)} - {formatDate(item.endDate)}</Text>
-                          <Tag color={active ? "processing" : "default"}>
-                            {active ? "Activa" : "Finalitzada"}
-                          </Tag>
-                        </Space>
-                      }
-                      description={
-                        <>
-                          <Text strong>Motiu: </Text>
-                          <Text>
-                            {item.cancelledTrips && item.cancelledTrips.length > 0
-                              ? item.cancelledTrips[0].reason
-                              : "No s'ha especificat"}
-                          </Text>
-                          <br />
-                          <Text strong>Viatges afectats: </Text>
-                          <Text>{item.cancelledTrips ? item.cancelledTrips.length : 0}</Text>
-                        </>
-                      }
-                    />
-                  </List.Item>
-                );
-              }}
-              locale={{
-                emptyText: (
-                  <Empty
-                    description="No tens cap indisponibilitat registrada"
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  />
-                )
-              }}
-            />
-          )}
-        </Card>
+                        <List.Item.Meta
+                          avatar={<CalendarOutlined style={{ fontSize: '24px' }} />}
+                          title={
+                            <Space>
+                              <Text>{formatDate(item.startDate)} - {formatDate(item.endDate)}</Text>
+                              <Tag color={active ? "processing" : "default"}>
+                                {active ? "Activa" : "Finalitzada"}
+                              </Tag>
+                            </Space>
+                          }
+                          description={
+                            <>
+                              <Text strong>Motiu: </Text>
+                              <Text>
+                                {item.cancelledTrips && item.cancelledTrips.length > 0
+                                  ? item.cancelledTrips[0].reason
+                                  : "No s'ha especificat"}
+                              </Text>
+                              <br />
+                              <Text strong>Viatges afectats: </Text>
+                              <Text>{item.cancelledTrips ? item.cancelledTrips.length : 0}</Text>
+                            </>
+                          }
+                        />
+                      </Card>
+                    );
+                  }}
+                  locale={{
+                    emptyText: (
+                      <Empty
+                        description="No tens cap indisponibilitat registrada"
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      />
+                    )
+                  }}
+                />
+              )}
+            </Card>
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );

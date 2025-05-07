@@ -50,11 +50,11 @@ const MainLayout = ({ children }) => {
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo-container">
+        <div className="logo-container-ML">
           <img
             src={require("../../Assets/CarMatch.png")}
             alt="Logo"
-            className="logo"
+            className="logo-ML"
           />
         </div>
         <Menu

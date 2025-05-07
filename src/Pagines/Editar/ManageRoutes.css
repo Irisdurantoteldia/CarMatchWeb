@@ -1,55 +1,273 @@
+/* Main Layout */
 .routes-layout {
   min-height: 100vh;
-  background-color: #f0f2f5;
+  background-color: #EEF5FF;
 }
 
 .routes-content {
-  padding: 24px;
-  max-width: 800px;
+  padding: 48px 24px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+/* Card Styles */
 .routes-card {
-  margin-bottom: 24px;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.header {
+.main-card {
+  padding: 12px;
+  background: #fff;
+  min-height: 600px;
+}
+
+.loading-card {
+  padding: 48px;
+}
+
+/* Header Styles */
+.page-header {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
+  gap: 16px;
+  padding: 16px 8px;
+}
+
+.page-title {
+  margin: 0 !important;
+  color: #333c87;
+  font-weight: 600;
+}
+
+.back-button {
+  font-size: 20px;
+  color: #333c87 !important;
+  margin-left: -8px;
+}
+
+/* Trip Card Styles */
+.trips-list {
+  padding: 16px 8px;
 }
 
 .trip-card {
-  margin-bottom: 16px;
-  cursor: pointer;
+  margin-bottom: 24px;
+  border-radius: 14px;
+  background: #f6ffed;
+  border: 1.5px solid #b7eb8f;
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.08);
   transition: all 0.3s;
 }
 
 .trip-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.16);
 }
 
-.trip-header {
+.trip-content {
   display: flex;
   align-items: flex-start;
+  padding: 8px;
 }
 
-.location-icon {
-  font-size: 24px;
-  color: #1890ff;
-  margin-right: 16px;
-  margin-top: 4px;
+.trip-icon {
+  font-size: 36px;
+  color: #52c41a;
+  margin-right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  height: 60px;
+  background: rgba(82, 196, 26, 0.1);
+  border-radius: 12px;
 }
 
-.trip-info {
+.trip-details {
   flex: 1;
 }
 
-.trip-date {
-  display: block;
-  margin-top: 8px;
+.trip-route {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
+.location {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.route-arrow {
+  margin: 0 12px;
+  color: #52c41a;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.trip-meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+}
+
+.meta-text {
+  color: #666;
+}
+
+.status-tag {
+  border-radius: 6px;
+  padding: 2px 12px;
+  font-weight: 500;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.trip-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+/* Empty State */
 .empty-state {
-  padding: 48px 0;
+  padding: 64px 0;
+}
+
+/* Map Modal Styles */
+.map-container {
+  width: 100%;
+  height: 500px;
+  background-color: #f0f2f5;
+  position: relative;
+}
+
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e6f7ff 0%, #e6fffb 100%);
+  padding: 20px;
+}
+
+.map-details {
+  width: 80%;
+  max-width: 600px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+
+.map-marker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.map-marker.origin {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.map-marker.origin span {
+  color: #0050b3;
+  font-size: 24px;
+}
+
+.map-marker.destination {
+  background-color: #f6ffed;
+  color: #52c41a;
+  margin-top: 20px;
+}
+
+.map-marker.destination span {
+  color: #389e0d;
+  font-size: 24px;
+}
+
+.map-route-line {
+  height: 60px;
+  width: 4px;
+  background: linear-gradient(to bottom, #1890ff, #52c41a);
+  margin-left: 12px;
+}
+
+.map-stats {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+.map-stats .ant-tag {
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 16px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .routes-content {
+    padding: 24px 16px;
+  }
+  
+  .trip-content {
+    flex-direction: column;
+  }
+  
+  .trip-icon {
+    margin-bottom: 16px;
+    margin-right: 0;
+  }
+  
+  .trip-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .trip-actions {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 1440px) {
+  .routes-content {
+    max-width: 1400px;
+  }
+  
+  .trip-card {
+    transition: all 0.4s ease;
+  }
+  
+  .trip-card:hover {
+    transform: translateY(-4px);
+  }
 }

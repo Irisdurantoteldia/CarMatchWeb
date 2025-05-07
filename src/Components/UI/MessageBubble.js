@@ -11,7 +11,11 @@ const MessageBubble = ({ message, currentUserId }) => {
     <div className={`message-container ${isCurrentUser ? 'current-user' : 'other-user'}`}>
       <div className={`message-bubble ${isCurrentUser ? 'current-user-bubble' : 'other-user-bubble'}`}>
         <Text className={`message-text ${isCurrentUser ? 'current-user-text' : 'other-user-text'}`}>
-          {message.text}
+          {typeof message.text === 'string' || typeof message.text === 'number'
+            ? message.text
+            : message.text && typeof message.text === 'object'
+              ? JSON.stringify(message.text)
+              : ''}
         </Text>
       </div>
     </div>

@@ -1,35 +1,21 @@
 import React from "react";
 import { Card, Menu } from "antd";
-import { CalendarOutlined, CarOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import "./DriverOptions.css";
+import { driverOptions } from "./optionsConfig";
 
 const DriverOptions = ({ navigation, userData }) => {
   return (
     <Card title="Opcions de conductor" className="driver-options">
       <Menu mode="vertical">
-        <Menu.Item 
-          key="unavailability" 
-          icon={<CalendarOutlined />}
-          onClick={() => navigation.navigate("UnavailabilityList")}
-        >
-          Gestionar indisponibilitats
-        </Menu.Item>
-
-        <Menu.Item 
-          key="vehicle" 
-          icon={<CarOutlined />}
-          onClick={() => navigation.navigate("ManageVehicle")}
-        >
-          Gestionar vehicle
-        </Menu.Item>
-
-        <Menu.Item 
-          key="routes" 
-          icon={<EnvironmentOutlined />}
-          onClick={() => navigation.navigate("ManageRoutes")}
-        >
-          Gestionar rutes
-        </Menu.Item>
+        {driverOptions.map((option) => (
+          <Menu.Item
+            key={option.key}
+            icon={option.icon}
+            onClick={() => navigation.navigate(option.route)}
+          >
+            {option.label}
+          </Menu.Item>
+        ))}
       </Menu>
     </Card>
   );

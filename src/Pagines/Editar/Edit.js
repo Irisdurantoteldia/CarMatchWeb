@@ -1,71 +1,106 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Menu, Card, Typography, Spin, Alert } from "antd";
-import { 
-  UserOutlined, 
-  ClockCircleOutlined, 
-  SettingOutlined, 
-  QuestionCircleOutlined 
+import { useNavigate } from "react-router-dom";
+import {
+  Layout,
+  Card,
+  Typography,
+  Spin,
+  Alert,
+  Row,
+  Col,
+} from "antd";
+import {
+  SettingOutlined,
+  CarOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
-import { doc, getDoc, query, where, getDocs, collection } from "firebase/firestore";
+import { query, where, getDocs, collection } from "firebase/firestore";
 import { db, auth } from "../../FireBase/FirebaseConfig";
-import DriverOptions from "../../Components/Edit/DriverOptions";
-import PassengerOptions from "../../Components/Edit/PassengerOptions";
+import { generalOptions, driverOptions, passengerOptions } from "../../Components/Edit/optionsConfig";
 import "./Edit.css";
 
 const { Content } = Layout;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
-const Edit = ({ navigate }) => {
+const Edit = () => {
+  const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        try {
-          // Buscar el usuario por userId en lugar de uid
-          const usersQuery = query(
-            collection(db, "users"),
-            where("userId", "==", user.uid)
-          );
-          const userSnapshot = await getDocs(usersQuery);
-          
-          if (!userSnapshot.empty) {
-            const userDoc = userSnapshot.docs[0];
-            const data = userDoc.data();
-            setUserData(data);
-            setUserRole(data.role || "Passatger");
-          } else {
-            Alert.alert(
-              "Error",
-              "No s'ha trobat el perfil de l'usuari. Si us plau, torna a iniciar sessió."
-            );
-            navigate('/login');
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-          Alert.error(
-            "No s'han pogut carregar les dades de l'usuari. Si us plau, torna-ho a provar més tard."
-          );
-          navigate('/login');  // Replace navigation with navigate
+    const fetchUserData = async () => {
+      try {
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          navigate("/login");
+          return;
         }
-      } else {
-        navigate('/login');  // Replace navigation with navigate
-      }
-      setLoading(false);
-    });
 
-    return () => unsubscribe();
+        const usersQuery = query(
+          collection(db, "users"),
+          where("userId", "==", currentUser.uid)
+        );
+        const userSnapshot = await getDocs(usersQuery);
+
+        if (!userSnapshot.empty) {
+          const userDoc = userSnapshot.docs[0];
+          const data = userDoc.data();
+          setUserData(data);
+          setUserRole(data.role || "Passatger");
+        } else {
+          Alert.error("No s'ha trobat el perfil de l'usuari");
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        Alert.error("Error al carregar les dades de l'usuari");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
   }, [navigate]);
+
+  const handleNavigate = (option) => {
+    if (option.key === "account") {
+      navigate("/account");
+    } else {
+      navigate(`/edit/${option.route}`);
+    }
+  };
+
+  const renderOptions = (options) => {
+    return (
+      <Row gutter={[24, 24]}>
+        {options.map((option) => (
+          <Col xs={24} md={12} lg={8} key={option.key}>
+            <Card
+              className="edit-option-block"
+              hoverable
+              onClick={() => handleNavigate(option)}
+            >
+              <div className="option-icon">
+                {option.icon}
+              </div>
+              <div className="option-content">
+                <Title level={4}>{option.label}</Title>
+                <Text>{option.description}</Text>
+              </div>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    );
+  };
 
   if (loading) {
     return (
-      <Layout className="edit-layout">
-        <Content className="edit-content">
-          <Spin size="large" tip="Cargando..." />
-        </Content>
-      </Layout>
+      <div className="edit-loading">
+        <Spin size="large" />
+        <p>Carregant...</p>
+      </div>
     );
   }
 
@@ -73,7 +108,12 @@ const Edit = ({ navigate }) => {
     return (
       <Layout className="edit-layout">
         <Content className="edit-content">
-          <Title level={4}>No se han podido cargar los datos</Title>
+          <Alert
+            message="Error"
+            description="No s'han pogut carregar les dades"
+            type="error"
+            showIcon
+          />
         </Content>
       </Layout>
     );
@@ -82,49 +122,27 @@ const Edit = ({ navigate }) => {
   return (
     <Layout className="edit-layout">
       <Content className="edit-content">
-        <Card title="Perfil" className="profile-section">
-          <Menu mode="vertical">
-            <Menu.Item 
-              key="profile" 
-              icon={<UserOutlined />}
-              onClick={() => navigate("/account", { state: { userData } })}
-            >
-              Editar perfil
-            </Menu.Item>
-            <Menu.Item 
-              key="schedule" 
-              icon={<ClockCircleOutlined />}
-              onClick={() => navigate("/edit-schedule", { state: { userId: auth.currentUser.uid } })}
-            >
-              Editar horario
-            </Menu.Item>
-          </Menu>
-        </Card>
+        <div className="edit-section">
+          <Title level={4} className="section-title">
+            <SettingOutlined /> Configuració General
+          </Title>
+          {renderOptions(generalOptions)}
+        </div>
 
-        {userRole === "Conductor" ? (
-          <DriverOptions navigate={navigate} userData={userData} />
-        ) : (
-          <PassengerOptions navigate={navigate} userData={userData} />
-        )}
-
-        <Card title="Configuración" className="settings-section">
-          <Menu mode="vertical">
-            <Menu.Item 
-              key="settings" 
-              icon={<SettingOutlined />}
-              onClick={() => navigate("/settings")}
-            >
-              Configuración
-            </Menu.Item>
-            <Menu.Item 
-              key="help" 
-              icon={<QuestionCircleOutlined />}
-              onClick={() => navigate("/help")}
-            >
-              Ayuda
-            </Menu.Item>
-          </Menu>
-        </Card>
+        <div className="edit-section">
+          <Title level={4} className="section-title">
+            {userRole === "Conductor" ? (
+              <>
+                <CarOutlined /> Opcions de Conductor
+              </>
+            ) : (
+              <>
+                <TeamOutlined /> Opcions de Passatger
+              </>
+            )}
+          </Title>
+          {renderOptions(userRole === "Conductor" ? driverOptions : passengerOptions)}
+        </div>
       </Content>
     </Layout>
   );

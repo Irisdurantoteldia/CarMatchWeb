@@ -6,7 +6,6 @@ import {
   CarOutlined,
   EnvironmentOutlined,
   CompassOutlined,
-  HeartOutlined,
   SearchOutlined,
   SettingOutlined,
   TeamOutlined,
@@ -67,11 +66,11 @@ const Search = () => {
 
   return (
     <div className="search-page">
-      <Card className="search-container">
+      <Card className="search-container" bordered={false}>
         <div className="search-header">
-          <Title level={2}>Cercar Usuaris</Title>
+          <Title level={3}>Cercar Usuaris</Title>
           <Button
-            type="primary"
+            type="text"
             icon={<SettingOutlined />}
             onClick={() => setShowFilters(true)}
             className="filter-button"
@@ -80,13 +79,12 @@ const Search = () => {
           </Button>
         </div>
 
-        <Space direction="vertical" className="search-content" size="large">
+        <Space direction="vertical" className="search-content" size="middle">
           <div className="search-fields">
             <Select
               value={searchField}
               onChange={setSearchField}
               className="search-field-selector"
-              dropdownClassName="search-dropdown"
             >
               {searchFields.map((field) => (
                 <Option key={field.id} value={field.id}>
@@ -95,92 +93,61 @@ const Search = () => {
                     {field.icon === "car-outline" && <CarOutlined />}
                     {field.icon === "location-outline" && <EnvironmentOutlined />}
                     {field.icon === "navigate-outline" && <CompassOutlined />}
-                    {field.icon === "heart-outline" && <HeartOutlined />}
                     {field.label}
                   </Space>
                 </Option>
               ))}
             </Select>
 
-            <Input.Search
+            <Input
               placeholder={`Cercar per ${searchFields.find((f) => f.id === searchField)?.label.toLowerCase()}...`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              onSearch={() => {}}
               className="search-input"
-              allowClear
+              prefix={<SearchOutlined />}
             />
           </div>
 
           {loading ? (
-            <div className="loading-container">
+            <div className="loading-container" style={{ textAlign: 'center', padding: '40px' }}>
               <Spin size="large" />
             </div>
           ) : (
             <List
               className="users-list"
               dataSource={users}
-              locale={{
-                emptyText: (
-                  <div className="empty-state">
-                    <SearchOutlined style={{ fontSize: 48 }} />
-                    <p>
-                      {searchTerm || Object.values(filters).some((v) => v)
-                        ? "No s'han trobat usuaris"
-                        : "Utilitza els filtres per cercar usuaris"}
-                    </p>
-                  </div>
-                ),
-              }}
               renderItem={(item) => (
                 <List.Item
                   key={item.id}
-                  onClick={() =>
-                    navigate("/swipes", {
-                      state: {
-                        selectedUserId: item.id,
-                        userData: item,
-                      },
-                    })
-                  }
+                  onClick={() => navigate("/swipes", { state: { selectedUserId: item.id, userData: item } })}
                   className="user-card"
+                  style={{ padding: '12px', cursor: 'pointer', transition: 'all 0.3s' }}
                 >
-                  <div className="user-info">
-                    <img src={item.photo || "https://via.placeholder.com/100"} alt={item.nom} className="user-photo" />
+                  <div className="user-info" style={{ display: 'flex', gap: '16px' }}>
+                    <img 
+                      src={item.photo || "https://via.placeholder.com/100"} 
+                      alt={item.nom} 
+                      className="user-photo" 
+                      style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }}
+                    />
                     <div className="user-details">
-                      <Title level={4} className="user-name">
-                        {item.nom || "Sense nom"}
-                      </Title>
-                      <Tag color={item.role === "Conductor" ? "blue" : "green"} className="role-tag">
+                      <Title level={4} style={{ margin: '0 0 4px 0' }}>{item.nom || "Sense nom"}</Title>
+                      <Tag color={item.role === "Conductor" ? "blue" : "green"} style={{ marginBottom: '8px' }}>
                         {item.role}
                       </Tag>
 
-                      {item.location && (
-                        <div className="info-row">
-                          <EnvironmentOutlined className="info-icon" />
+                      {item.location && item.desti && (
+                        <div className="route-info" style={{ fontSize: '14px', color: '#666', display: 'flex', alignItems: 'center' }}>
                           <span>{item.location}</span>
-                        </div>
-                      )}
-
-                      {item.desti && (
-                        <div className="info-row">
-                          <CompassOutlined className="info-icon" />
+                          <span style={{ margin: '0 8px' }}>→</span>
                           <span>{item.desti}</span>
                         </div>
                       )}
 
                       {item.role === "Conductor" && item.carInfo && (
-                        <div className="car-info">
-                          <div className="info-row">
-                            <CarOutlined className="info-icon" />
-                            <span>
-                              {item.carInfo[0]} - {item.carInfo[1]}
-                            </span>
-                          </div>
-                          <div className="info-row">
-                            <TeamOutlined className="info-icon" />
-                            <span>{item.carInfo[2]} places</span>
-                          </div>
+                        <div className="car-info" style={{ fontSize: '14px', color: '#666', marginTop: '4px' }}>
+                          <CarOutlined style={{ marginRight: '8px' }} />
+                          {item.carInfo[0]} - {item.carInfo[1]} · {item.carInfo[2]} places
                         </div>
                       )}
                     </div>
