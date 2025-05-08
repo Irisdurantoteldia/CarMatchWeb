@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {
-  Layout,
-  Card,
-  Avatar,
-  Typography,
-  Button,
-  Space,
-  message,
-  Spin,
-} from "antd";
-import {
-  UserOutlined,
-  CarOutlined,
-  MailOutlined,
-  PhoneOutlined,
+import { Layout, Card, Avatar, Typography, Button, Space, message, Spin } from "antd";
+import { 
+  UserOutlined, 
+  CarOutlined, 
+  MailOutlined, 
+  PhoneOutlined, 
   KeyOutlined,
   QuestionCircleOutlined,
-  SettingOutlined,
+  SettingOutlined
 } from "@ant-design/icons";
 import { getUserById } from "../../Services/userService";
 import { auth, db } from "../../FireBase/FirebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 import "./Account.css";
 
 const { Title, Text } = Typography;
@@ -70,10 +61,10 @@ const Account = () => {
 
       const userRef = doc(db, "users", docId);
       await updateDoc(userRef, {
-        role: newRole,
+        role: newRole
       });
-
-      setUser((prev) => ({ ...prev, role: newRole }));
+      
+      setUser(prev => ({ ...prev, role: newRole }));
       message.success("S'ha actualitzat el rol correctament");
     } catch (error) {
       console.error("Error updating role:", error);
@@ -81,15 +72,12 @@ const Account = () => {
     }
   };
 
-  // Nuevas funciones para los botones de ayuda y configuración
   const handleHelpClick = () => {
     navigate("/help");
-    // Alternativa: message.info("Página de ayuda en desarrollo");
   };
 
   const handleSettingsClick = () => {
     navigate("/settings");
-    // Alternativa: message.info("Página de configuración en desarrollo");
   };
 
   if (loading) {
@@ -105,29 +93,55 @@ const Account = () => {
   return (
     <Layout className="account-layout">
       <Content className="account-content">
+        {/* Header - Area: header */}
         <Card className="profile-header">
-          <Avatar
-            size={120}
+          <Avatar 
+            size={120} 
             src={user?.photo || "https://via.placeholder.com/150"}
             icon={<UserOutlined />}
           />
-          <Title level={2}>{user?.name}</Title>
-          <Text type="secondary">{user?.role}</Text>
+          <div className="profile-header-text">
+            <Title level={2}>{user?.nom || "Usuario"}</Title>
+            <Text type="secondary">{user?.role || "Rol"}</Text>
+          </div>
         </Card>
 
+        {/* Profile Section - Area: profile */}
+        {userId === auth.currentUser?.uid && (
+          <Card className="role-switcher">
+            <Space size="large">
+              <Button
+                type={user?.role === "Conductor" ? "primary" : "default"}
+                icon={<CarOutlined />}
+                onClick={() => handleRoleSwitch("Conductor")}
+              >
+                Conductor
+              </Button>
+              <Button
+                type={user?.role === "Passatger" ? "primary" : "default"}
+                icon={<UserOutlined />}
+                onClick={() => handleRoleSwitch("Passatger")}
+              >
+                Passatger
+              </Button>
+            </Space>
+          </Card>
+        )}
+
+        {/* Info Section - Area: info */}
         <Card title="Informació Personal" className="info-section">
-          <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+          <Space direction="vertical" size="middle" style={{ width: '100%' }}>
             <div className="info-row">
               <MailOutlined />
-              <Text>{user.email}</Text>
+              <Text>{user?.email || "email@example.com"}</Text>
             </div>
-            {user.phone && (
+            {user?.phone && (
               <div className="info-row">
                 <PhoneOutlined />
                 <Text>{user.phone}</Text>
               </div>
             )}
-            {user.bio && (
+            {user?.bio && (
               <div className="bio-container">
                 <Text>{user.bio}</Text>
               </div>
@@ -135,50 +149,37 @@ const Account = () => {
           </Space>
         </Card>
 
-        <Card className="helper-card help-card" onClick={handleHelpClick}>
+        {/* Help Section - Area: help */}
+        <Card
+          className="helper-card help-card"
+          onClick={handleHelpClick}
+        >
           <QuestionCircleOutlined className="helper-icon" />
-          <Text className="helper-text">Help</Text>
+          <Text className="helper-text">Ajuda</Text>
         </Card>
 
+        {/* Settings Section - Area: settings */}
         <Card
           className="helper-card settings-card"
           onClick={handleSettingsClick}
         >
           <SettingOutlined className="helper-icon" />
-          <Text className="helper-text">Settings</Text>
+          <Text className="helper-text">Configuració</Text>
         </Card>
 
+        {/* Actions - Area: actions */}
         {userId === auth.currentUser?.uid && (
-          <>
-            <Card className="role-switcher">
-              <Space size="large">
-                <Button
-                  type={user?.role === "Conductor" ? "primary" : "default"}
-                  icon={<CarOutlined />}
-                  onClick={() => handleRoleSwitch("Conductor")}
-                >
-                  Conductor
-                </Button>
-                <Button
-                  type={user?.role === "Passatger" ? "primary" : "default"}
-                  icon={<UserOutlined />}
-                  onClick={() => handleRoleSwitch("Passatger")}
-                >
-                  Passatger
-                </Button>
-              </Space>
-            </Card>
-            <Button
-              icon={<KeyOutlined />}
-              block
-              className="change-password-button"
-              onClick={() => message.info("Funcionalitat en desenvolupament")}
-            >
-              Canviar Contrasenya
-            </Button>
-          </>
+          <Button 
+            icon={<KeyOutlined />}
+            block
+            className="change-password-button"
+            onClick={() => message.info("Funcionalitat en desenvolupament")}
+          >
+            Canviar Contrasenya
+          </Button>
         )}
 
+        {/* Vehicle Management - Area: vehicle */}
         {user?.role === "Conductor" && (
           <Button
             icon={<CarOutlined />}

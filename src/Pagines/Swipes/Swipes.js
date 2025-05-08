@@ -105,50 +105,43 @@ export default function Swipes() {
       );
     }
 
-    if (selectedUserId) {
-      const selectedUser =
-        users.find((user) => user.userId === selectedUserId) ||
-        users.find((user) => user.id === selectedUserId);
-
-      if (selectedUser) {
-        return (
-          <>
-            <div className="card-container">
-              <Card className="swipe-card">
-                <SwipeCard
-                  user={selectedUser}
-                  detailedView={detailedView}
-                  onToggleDetailedView={toggleDetailedView}
-                />
-              </Card>
+    if (selectedUserId && userData) {
+      return (
+        <>
+          <div className="card-container">
+            <Card className="swipe-card">
+              <SwipeCard
+                user={userData}
+                detailedView={detailedView}
+                onToggleDetailedView={toggleDetailedView}
+              />
+            </Card>
+          </div>
+          <div className="button-container">
+            <div className="swipe-buttons">
+              <button
+                className="swipe-button dislike"
+                onClick={() => {
+                  handleDislike();
+                  navigate(-1);
+                }}
+              >
+                <CloseOutlined />
+              </button>
+              <button
+                className="swipe-button like"
+                onClick={() => {
+                  handleLike();
+                  navigate(-1);
+                }}
+              >
+                <HeartOutlined />
+              </button>
             </div>
-            <div className="button-container">
-              <div className="swipe-buttons">
-                <button
-                  className="swipe-button dislike"
-                  onClick={() => {
-                    handleDislike();
-                    navigate(-1);
-                  }}
-                >
-                  <CloseOutlined />
-                </button>
-                <button
-                  className="swipe-button like"
-                  onClick={() => {
-                    handleLike();
-                    navigate(-1);
-                  }}
-                >
-                  <HeartOutlined />
-                </button>
-              </div>
-            </div>
-          </>
-        );
-      }
+          </div>
+        </>
+      );
     }
-
     if (users.length === 0) {
       return (
         <Empty

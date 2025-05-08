@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import UserSchedule from "./UserSchedule";
 
-const SwipeCard = ({ user }) => {
+const SwipeCard = ({ user, detailedView, onToggleDetailedView }) => {
   const renderScheduleSummary = () => {
     if (!user.detailedSchedule || !user.detailedSchedule.days || user.detailedSchedule.days.length === 0) {
       return <p className="no-schedule">No hi ha horari disponible</p>;
