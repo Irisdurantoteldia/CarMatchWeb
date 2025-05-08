@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Card, Avatar, Typography, Button, Space, message, Spin } from "antd";
-import { UserOutlined, CarOutlined, MailOutlined, PhoneOutlined, KeyOutlined } from "@ant-design/icons";
+import {
+  Layout,
+  Card,
+  Avatar,
+  Typography,
+  Button,
+  Space,
+  message,
+  Spin,
+} from "antd";
+import {
+  UserOutlined,
+  CarOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  KeyOutlined,
+  QuestionCircleOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 import { getUserById } from "../../Services/userService";
 import { auth, db } from "../../FireBase/FirebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Account.css";
 
 const { Title, Text } = Typography;
@@ -53,15 +70,26 @@ const Account = () => {
 
       const userRef = doc(db, "users", docId);
       await updateDoc(userRef, {
-        role: newRole
+        role: newRole,
       });
-      
-      setUser(prev => ({ ...prev, role: newRole }));
+
+      setUser((prev) => ({ ...prev, role: newRole }));
       message.success("S'ha actualitzat el rol correctament");
     } catch (error) {
       console.error("Error updating role:", error);
       message.error("No s'ha pogut actualitzar el rol");
     }
+  };
+
+  // Nuevas funciones para los botones de ayuda y configuración
+  const handleHelpClick = () => {
+    navigate("/help");
+    // Alternativa: message.info("Página de ayuda en desarrollo");
+  };
+
+  const handleSettingsClick = () => {
+    navigate("/settings");
+    // Alternativa: message.info("Página de configuración en desarrollo");
   };
 
   if (loading) {
@@ -78,8 +106,8 @@ const Account = () => {
     <Layout className="account-layout">
       <Content className="account-content">
         <Card className="profile-header">
-          <Avatar 
-            size={120} 
+          <Avatar
+            size={120}
             src={user?.photo || "https://via.placeholder.com/150"}
             icon={<UserOutlined />}
           />
@@ -88,7 +116,7 @@ const Account = () => {
         </Card>
 
         <Card title="Informació Personal" className="info-section">
-          <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          <Space direction="vertical" size="middle" style={{ width: "100%" }}>
             <div className="info-row">
               <MailOutlined />
               <Text>{user.email}</Text>
@@ -105,6 +133,19 @@ const Account = () => {
               </div>
             )}
           </Space>
+        </Card>
+
+        <Card className="helper-card help-card" onClick={handleHelpClick}>
+          <QuestionCircleOutlined className="helper-icon" />
+          <Text className="helper-text">Help</Text>
+        </Card>
+
+        <Card
+          className="helper-card settings-card"
+          onClick={handleSettingsClick}
+        >
+          <SettingOutlined className="helper-icon" />
+          <Text className="helper-text">Settings</Text>
         </Card>
 
         {userId === auth.currentUser?.uid && (
@@ -127,8 +168,7 @@ const Account = () => {
                 </Button>
               </Space>
             </Card>
-
-            <Button 
+            <Button
               icon={<KeyOutlined />}
               block
               className="change-password-button"

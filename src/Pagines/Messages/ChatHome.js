@@ -21,24 +21,25 @@ const ChatHome = () => {
   const loadPreviousMessages = async (matchId) => {
     try {
       setLoading(true);
-      const messagesRef = collection(db, "messages");
+      // Canviem la referència per accedir a la subcol·lecció
+      const messagesRef = collection(db, "matches", matchId, "messages");
       const q = query(
         messagesRef,
-        where("matchId", "==", matchId),
-        orderBy("timestamp", "desc")
+        orderBy("date", "asc")
       );
       
       const querySnapshot = await getDocs(q);
       const messages = querySnapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
+        date: doc.data().date?.toDate()
       }));
 
       setChatState(prev => ({
         ...prev,
         [matchId]: {
           ...prev[matchId],
-          messages: messages.reverse(),
+          messages: messages,
           loading: false
         }
       }));
@@ -52,7 +53,16 @@ const ChatHome = () => {
   // Gestionar selecció del match i carregar missatges
   const handleSelectMatch = async (match) => {
     setSelectedMatch(match);
-    if (!chatState[match.matchId]?.messages) {
+    // Inicialitzem l'estat del xat si no existeix
+    if (!chatState[match.matchId]) {
+      setChatState(prev => ({
+        ...prev,
+        [match.matchId]: {
+          messages: [],
+          loading: true,
+          newMessage: ''
+        }
+      }));
       await loadPreviousMessages(match.matchId);
     }
   };
@@ -63,18 +73,18 @@ const ChatHome = () => {
   useEffect(() => {
     if (!selectedMatch?.matchId) return;
 
-    const messagesRef = collection(db, "messages");
+    // Canviem la referència per accedir a la subcol·lecció
+    const messagesRef = collection(db, "matches", selectedMatch.matchId, "messages");
     const q = query(
       messagesRef,
-      where("matchId", "==", selectedMatch.matchId),
-      orderBy("timestamp", "asc") // Canviem a asc per mostrar els missatges en ordre cronològic
+      orderBy("date", "asc")
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const messages = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
-        timestamp: doc.data().timestamp?.toDate() // Convertim el timestamp a Date
+        date: doc.data().date?.toDate()
       }));
 
       setChatState(prev => ({
@@ -97,25 +107,21 @@ const ChatHome = () => {
     if (!messageText?.trim()) return;
 
     try {
-      const messagesRef = collection(db, "messages");
+      // Canviem la referència per enviar a la subcol·lecció
+      const messagesRef = collection(db, "matches", matchId, "messages");
       const messageData = {
-        matchId,
         text: messageText,
-        senderId: auth.currentUser.uid,
-        senderName: auth.currentUser.displayName || 'Usuari',
-        senderPhoto: auth.currentUser.photoURL,
-        timestamp: serverTimestamp(),
-        read: false
+        sender: auth.currentUser.uid,
+        date: serverTimestamp(),
       };
 
       await addDoc(messagesRef, messageData);
 
-      // Actualitzem l'estat local immediatament per una millor UX
+      // Netejem el camp de missatge
       setChatState(prev => ({
         ...prev,
         [matchId]: {
           ...prev[matchId],
-          messages: [...(prev[matchId]?.messages || []), { ...messageData, id: Date.now().toString() }],
           newMessage: ''
         }
       }));
@@ -168,8 +174,7 @@ const ChatHome = () => {
                 <div className="chat-header">
                   <Avatar src={selectedMatch.photo} icon={<UserOutlined />} size={48} />
                   <div className="chat-header-info">
-                    <Text strong>{selectedMatch.name || selectedMatch.displayName}</Text>
-                    <div className="chat-header-sub">{selectedMatch.email || ''}</div>
+                    <Text strong>{selectedMatch.nom}</Text>
                   </div>
                 </div>
                 <div className="chat-messages-container">
@@ -180,24 +185,23 @@ const ChatHome = () => {
                     matchId={selectedMatch.matchId}
                   />
                 </div>
-                <div className="chat-input">
+                <div className="chat-input-container">
                   <ChatInput
-                    newMessage={chatState[selectedMatch.matchId]?.newMessage || ''}
-                    setNewMessage={(msg) => setChatState((prev) => ({
+                    value={chatState[selectedMatch.matchId]?.newMessage || ''}
+                    onChange={(e) => setChatState(prev => ({
                       ...prev,
                       [selectedMatch.matchId]: {
                         ...prev[selectedMatch.matchId],
-                        newMessage: msg
+                        newMessage: e.target.value
                       }
                     }))}
-                    sendMessage={() => sendMessage(selectedMatch.matchId)}
-                    matchId={selectedMatch.matchId}
+                    onSend={() => sendMessage(selectedMatch.matchId)}
                   />
                 </div>
               </Card>
             ) : (
               <div className="no-chat-selected">
-                <Text type="secondary">Selecciona un match per començar a xatejar</Text>
+                <Text type="secondary">Selecciona un xat per començar a parlar</Text>
               </div>
             )}
           </div>

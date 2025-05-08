@@ -66,7 +66,24 @@ const Chat = () => {
   // Cargar mensajes al montar el componente o cuando cambie el matchId
   useEffect(() => {
     if (matchId) {
-      loadMessages();
+      const messagesRef = collection(db, "messages");
+      const q = query(
+        messagesRef,
+        where("matchId", "==", matchId),
+        orderBy("timestamp", "asc")
+      );
+
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const loadedMessages = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          timestamp: doc.data().timestamp?.toDate()
+        }));
+        setMessages(loadedMessages);
+        setLoading(false);
+      });
+
+      return () => unsubscribe();
     }
   }, [matchId]);
 
@@ -93,17 +110,17 @@ const Chat = () => {
                 loading={loading}
                 currentUserId={auth.currentUser?.uid}
                 matchId={matchId}
+                flatListRef={React.useRef()}
               />
             )}
           </div>
-          <div className="chat-input">
-            <ChatInput
-              newMessage={newMessage}
-              setNewMessage={setNewMessage}
-              sendMessage={sendMessage}
-              matchId={matchId}
-            />
-          </div>
+          <ChatInput
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            sendMessage={sendMessage}
+            matchId={matchId}
+            inputRef={React.useRef()}
+          />
         </Card>
       </Content>
     </Layout>

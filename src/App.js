@@ -4,7 +4,6 @@ import MainLayout from './Components/Layout/MainLayout';
 import Swipes from './Pagines/Swipes/Swipes';
 import Search from './Pagines/Cerca/Search';
 import Edit from './Pagines/Editar/Edit';
-import Matches from './Pagines/Messages/Matches';
 import Account from './Pagines/Perfil/Account';
 import DriverUnavailability from './Pagines/Editar/DriverUnavailability';
 import UnavailabilityList from './Pagines/Editar/UnavailabilityList';
@@ -16,6 +15,8 @@ import TravelPreferences from './Pagines/Editar/TravelPreferences';
 import Login from './Pagines/Inici/Login';
 import ProtectedRoute from './Components/ProtectedRoute';
 import ChatHome from './Pagines/Messages/ChatHome';
+import Help from './Pagines/Perfil/Help';
+import Settings from './Pagines/Perfil/Settings';
 
 const App = () => {
   return (
@@ -40,6 +41,8 @@ const App = () => {
                   <Route path="/edit/edit-schedule" element={<EditSchedule />} />
                   <Route path="/matches" element={<ChatHome />} />
                   <Route path="/account" element={<Account />} />
+                  <Route path="/help" element={<Help />} />
+                  <Route path="/settings" element={<Settings />} />
                   <Route path="/" element={<Swipes />} />
                 </Routes>
               </MainLayout>

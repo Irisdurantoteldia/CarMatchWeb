@@ -12,10 +12,11 @@ const MessageList = ({
   matchId,
 }) => {
   useEffect(() => {
-    if (messages.length > 0 && flatListRef.current) {
-      flatListRef.current.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 0 && flatListRef?.current) {
+      const element = flatListRef.current;
+      element.scrollTop = element.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, flatListRef]);
 
   if (loading) {
     return (

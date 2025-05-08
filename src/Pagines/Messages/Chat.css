@@ -3,6 +3,37 @@
 }
 
 .chat-content {
+  padding: 24px;
+  height: 100%;
+}
+
+.chat-card {
+  height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  padding: 16px;
+  border-bottom: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-messages-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+.loading-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-content {
   display: flex;
   flex-direction: column;
   height: 100%;
