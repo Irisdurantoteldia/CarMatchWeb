@@ -1,5 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { auth } from './FireBase/FirebaseConfig';
+import { signOut } from 'firebase/auth';
 import MainLayout from './Components/Layout/MainLayout';
 import Swipes from './Pagines/Swipes/Swipes';
 import Search from './Pagines/Cerca/Search';
@@ -19,6 +21,43 @@ import Help from './Pagines/Perfil/Help';
 import Settings from './Pagines/Perfil/Settings';
 
 const App = () => {
+  useEffect(() => {
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+      
+      // Tancar sessió després de 30 minuts d'inactivitat
+      inactivityTimer = setTimeout(() => {
+        if (auth.currentUser) {
+          signOut(auth);
+        }
+      }, 30 * 60 * 1000); // 30 minuts en mil·lisegons
+    };
+
+    // Events per reiniciar el temporitzador
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+    
+    events.forEach(event => {
+      document.addEventListener(event, resetTimer);
+    });
+
+    // Iniciar el temporitzador
+    resetTimer();
+
+    // Netejar els event listeners
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, resetTimer);
+      });
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+    };
+  }, []);
+
   return (
     <Router>
       <Routes>
@@ -43,7 +82,7 @@ const App = () => {
                   <Route path="/account" element={<Account />} />
                   <Route path="/help" element={<Help />} />
                   <Route path="/settings" element={<Settings />} />
-                  <Route path="/" element={<Swipes />} />
+                  <Route path="/" element={<Navigate to="/login" replace />} />
                 </Routes>
               </MainLayout>
             </ProtectedRoute>
