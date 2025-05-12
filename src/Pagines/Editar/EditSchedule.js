@@ -90,18 +90,13 @@ const EditSchedule = () => {
       <Content className="schedule-content">
         <Card className="schedule-card">
           <div className="header">
-            <Button 
-              icon={<ArrowLeftOutlined />} 
-              type="link" 
-              onClick={() => navigate(-1)}
-            />
-            <Title level={3}>Editar Horario</Title>
+            <Title level={3}>Editar Horari</Title>
           </div>
 
           <Tabs defaultActiveKey="1">
-            <Tabs.TabPane tab="Horario General" key="1">
+            <Tabs.TabPane tab="Horari General" key="1">
               <Form layout="vertical">
-                <Form.Item label="Hora de Entrada">
+                <Form.Item label="Hora d'Entrada">
                   <TimePicker
                     value={horaEntrada}
                     onChange={setHoraEntrada}
@@ -109,7 +104,7 @@ const EditSchedule = () => {
                     className="time-picker"
                   />
                 </Form.Item>
-                <Form.Item label="Hora de Salida">
+                <Form.Item label="Hora de Sortida">
                   <TimePicker
                     value={horaSortida}
                     onChange={setHoraSortida}
@@ -118,11 +113,11 @@ const EditSchedule = () => {
                   />
                 </Form.Item>
                 <Button type="primary" block onClick={updateGeneralSchedule}>
-                  Aplicar a todos los días
+                  Aplicar a tots els dies
                 </Button>
               </Form>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Horario Detallado" key="2">
+            <Tabs.TabPane tab="Horari Detallat" key="2">
               {detailedSchedule.map((day, index) => (
                 <div key={index} className="day-container">
                   <Typography.Text className="day-title">
@@ -177,7 +172,7 @@ const EditSchedule = () => {
             onClick={handleSave}
             className="save-button"
           >
-            Guardar Cambios
+            Guardar Canvis
           </Button>
         </Card>
       </Content>

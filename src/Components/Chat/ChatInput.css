@@ -38,10 +38,6 @@
   background: #2851d8;
 }
 
-.trip-button {
-  margin-right: 10px;
-}
-
 .message-input {
   flex: 1;
   margin: 0 10px;
@@ -50,7 +46,7 @@
 
 .send-button {
   border-radius: 50%;
-  width: 40px;
+  width: 100px;
   height: 40px;
   padding: 0;
   display: flex;

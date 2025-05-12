@@ -17,8 +17,9 @@
 }
 
 .message-row {
-  margin: 2px 0;
+  margin: 8px 0;
   display: flex;
+  padding: 0 10px;
 }
 
 .my-message {
@@ -27,4 +28,24 @@
 
 .other-message {
   justify-content: flex-start;
+}
+
+.message-bubble {
+  padding: 8px 16px;
+  border-radius: 18px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+/* Els teus missatges (my-message) */
+.message-row.my-message .message-bubble {
+  background-color: #241382;
+  color: white;
+}
+
+/* Els missatges dels altres (other-message) */
+.message-row.other-message .message-bubble {
+  background-color: #413bb9c6;
+  color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }

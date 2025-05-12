@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { List, Spin } from "antd";
+import { auth } from "../../FireBase/FirebaseConfig";
 import MessageBubble from "../UI/MessageBubble";
 import EmptyChat from "./EmptyChat";
 import "./MessageList.css";
@@ -17,6 +18,8 @@ const MessageList = ({
       element.scrollTop = element.scrollHeight;
     }
   }, [messages, flatListRef]);
+
+  const currentUser = auth.currentUser;
 
   if (loading) {
     return (

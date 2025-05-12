@@ -48,12 +48,7 @@ const Help = () => {
           <Card
             title={
               <Space>
-                <Button 
-                  type="text" 
-                  icon={<ArrowLeftOutlined />} 
-                  onClick={() => navigate(-1)}
-                />
-                <Title level={3} style={{ margin: 0 }}>Ajuda</Title>
+                <Title level={3} style={{ margin: 0, justifyContent: 'center' }}>Ajuda</Title>
               </Space>
             }
             bordered={false}

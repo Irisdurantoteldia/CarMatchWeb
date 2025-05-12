@@ -107,17 +107,15 @@ const ChatHome = () => {
     if (!messageText?.trim()) return;
 
     try {
-      // Canviem la referència per enviar a la subcol·lecció
       const messagesRef = collection(db, "matches", matchId, "messages");
       const messageData = {
         text: messageText,
-        sender: auth.currentUser.uid,
+        senderId: auth.currentUser.uid,  // Canviat de 'sender' a 'senderId'
         date: serverTimestamp(),
       };
 
       await addDoc(messagesRef, messageData);
 
-      // Netejem el camp de missatge
       setChatState(prev => ({
         ...prev,
         [matchId]: {

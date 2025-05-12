@@ -51,12 +51,7 @@ const Settings = () => {
           <Card
             title={
               <Space>
-                <Button 
-                  type="text" 
-                  icon={<ArrowLeftOutlined />} 
-                  onClick={() => navigate(-1)}
-                />
-                <Title level={3} style={{ margin: 0 }}>Configuració</Title>
+                <Title level={3} style={{ margin: 0, justifyContent: 'center'}}>Configuració</Title>
               </Space>
             }
             bordered={false}
