@@ -96,7 +96,17 @@ const SignUp = () => {
                 },
               ]}
             >
-              <Input placeholder="El teu destí" />
+              <Select placeholder="Selecciona el teu destí">
+                <Option value="poligon_riu_dor">Polígon industrial Riu d'Or - Casa Nova</Option>
+                <Option value="poligon_llobregat">Polígon industrial Llobregat - Torroella</Option>
+                <Option value="poligon_santaanna">Polígon industrial Santa Anna</Option>
+                <Option value="poligon_santisidre">Polígon industrial Sant Isidre</Option>
+                <Option value="poligon_laserreta">Polígon industrial La Serreta</Option>
+                <Option value="poligon_labobila">Polígon industrial La Bòbila</Option>
+                <Option value="poligon_elgrau">Polígon industrial El Grau</Option>
+                <Option value="poligon_carretera_berga">Polígon industrial Carretera de Berga</Option>
+                <Option value="poligon_carretera_dartes">Polígon Carretera d'Artés</Option>
+              </Select>
             </Form.Item>
           </>
         );

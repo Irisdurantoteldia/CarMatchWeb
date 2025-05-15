@@ -50,15 +50,17 @@ const ManageRoutes = ({ navigate }) => {
       'Igualada': { latitude: 41.5786, longitude: 1.6172 },
       'Manresa': { latitude: 41.7289, longitude: 1.8267 },
       'Santpedor': { latitude: 41.7833, longitude: 1.8333 },
-      'Poligon 1': { latitude: 41.7312, longitude: 1.8397 },
-      'Poligon 2': { latitude: 41.7345, longitude: 1.8412 },
-      'Poligon 3': { latitude: 41.7367, longitude: 1.8434 },
-      'Poligon 4': { latitude: 41.7389, longitude: 1.8456 },
-      'Poligon 5': { latitude: 41.7401, longitude: 1.8478 },
-      'Poligon 6': { latitude: 41.7423, longitude: 1.8501 }
+      'poligon_riu_dor': { latitude: 41.7312, longitude: 1.8397 },
+      'poligon_llobregat': { latitude: 41.7345, longitude: 1.8412 },
+      'poligon_santaanna': { latitude: 41.7367, longitude: 1.8434 },
+      'poligon_santisidre': { latitude: 41.7389, longitude: 1.8456 },
+      'poligon_laserreta': { latitude: 41.7401, longitude: 1.8478 },
+      'poligon_labobila': { latitude: 41.7423, longitude: 1.8501 },
+      'poligon_elgrau': { latitude: 41.7445, longitude: 1.8523 },
+      'poligon_carretera_berga': { latitude: 41.7467, longitude: 1.8545 },
+      'poligon_carretera_dartes': { latitude: 41.7489, longitude: 1.8567 }
     };
 
-    // Afegim log per debugar
     const result = coordinates[location];
     if (!result) {
       console.warn(`Ubicació no trobada: ${location}, utilitzant Manresa com a predeterminat`);

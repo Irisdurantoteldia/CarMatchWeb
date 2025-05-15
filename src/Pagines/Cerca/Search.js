@@ -33,6 +33,41 @@ const Search = () => {
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([])
 
+  // Define getLocationName function before it's used
+  const getLocationName = (locationId) => {
+    const locations = {
+      'poligon_riu_dor': "Polígon industrial Riu d'Or - Casa Nova",
+      'poligon_llobregat': 'Polígon industrial Llobregat - Torroella',
+      'poligon_santaanna': 'Polígon industrial Santa Anna',
+      'poligon_santisidre': 'Polígon industrial Sant Isidre',
+      'poligon_laserreta': 'Polígon industrial La Serreta',
+      'poligon_labobila': 'Polígon industrial La Bòbila',
+      'poligon_elgrau': 'Polígon industrial El Grau',
+      'poligon_carretera_berga': 'Polígon industrial Carretera de Berga',
+      'poligon_carretera_dartes': "Polígon Carretera d'Artés"
+    };
+    return locations[locationId] || locationId;
+  };
+
+  const filteredUsers = users.filter(user => {
+    const searchTermLower = searchTerm.toLowerCase();
+    
+    if (!searchTerm) return true;
+
+    switch (searchField) {
+      case 'name':
+        return user.nom?.toLowerCase().includes(searchTermLower);
+      case 'car':
+        return user.carInfo?.join(' ').toLowerCase().includes(searchTermLower);
+      case 'location':
+        return getLocationName(user.location)?.toLowerCase().includes(searchTermLower);
+      case 'destination':
+        return getLocationName(user.desti)?.toLowerCase().includes(searchTermLower);
+      default:
+        return true;
+    }
+  });
+
   const searchFields = [
     { id: "name", label: "Nom", icon: "person-outline" },
     { id: "car", label: "Vehicle", icon: "car-outline" },
@@ -115,7 +150,7 @@ const Search = () => {
           ) : (
             <List
               className="users-list"
-              dataSource={users}
+              dataSource={filteredUsers}
               renderItem={(item) => (
                 <List.Item
                   key={item.id}
@@ -138,9 +173,9 @@ const Search = () => {
 
                       {item.location && item.desti && (
                         <div className="route-info" style={{ fontSize: '14px', color: '#666', display: 'flex', alignItems: 'center' }}>
-                          <span>{item.location}</span>
+                          <span>{getLocationName(item.location)}</span>
                           <span style={{ margin: '0 8px' }}>→</span>
-                          <span>{item.desti}</span>
+                          <span>{getLocationName(item.desti)}</span>
                         </div>
                       )}
 

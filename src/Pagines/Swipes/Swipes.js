@@ -13,10 +13,6 @@ export default function Swipes() {
   const location = useLocation();
   const selectedUserId = location.state?.selectedUserId;
   const userData = location.state?.userData;
-  const [startX, setStartX] = useState(null);
-  const [startY, setStartY] = useState(null);
-  const [position, setPosition] = useState(null);
-  const [rotation, setRotation] = useState(0);
 
   const {
     users,
@@ -26,73 +22,8 @@ export default function Swipes() {
     handleLike,
     handleDislike,
     toggleDetailedView,
-    resetPosition,
-    SWIPE_THRESHOLD,
     refreshUsers,
   } = useSwipes(selectedUserId, userData);
-
-  const handleTouchStart = (e) => {
-    const touch = e.touches[0];
-    setStartX(touch.clientX);
-    setStartY(touch.clientY);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!startX || !startY) return;
-    
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - startX;
-    const deltaY = touch.clientY - startY;
-    
-    setPosition({ x: deltaX, y: deltaY });
-    setRotation(deltaX * 0.1);
-  };
-
-  const handleTouchEnd = () => {
-    if (!position) return;
-    
-    if (position.x > SWIPE_THRESHOLD) {
-      handleDislike();
-    } else if (position.x < -SWIPE_THRESHOLD) {
-      handleLike();
-    }
-    setPosition(null);
-    setRotation(0);
-    setStartX(null);
-    setStartY(null);
-  };
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    setStartX(e.clientX);
-    setStartY(e.clientY);
-  };
-
-  const handleMouseMove = (e) => {
-    e.preventDefault();
-    if (!startX || !startY) return;
-    
-    const deltaX = e.clientX - startX;
-    const deltaY = e.clientY - startY;
-    
-    setPosition({ x: deltaX, y: deltaY });
-    setRotation(deltaX * 0.1);
-  };
-
-  const handleMouseUp = (e) => {
-    e.preventDefault();
-    if (!position) return;
-    
-    if (position.x > SWIPE_THRESHOLD) {
-      handleDislike();
-    } else if (position.x < -SWIPE_THRESHOLD) {
-      handleLike();
-    }
-    setPosition(null);
-    setRotation(0);
-    setStartX(null);
-    setStartY(null);
-  };
 
   const renderContent = () => {
     if (loading) {
@@ -174,22 +105,7 @@ export default function Swipes() {
 
     return (
       <>
-        <div
-          className="card-container"
-          style={{
-            transform: position
-              ? `translateX(${position.x}px) translateY(${position.y}px) rotate(${rotation}deg)`
-              : "none",
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onMouseDown={handleMouseDown}
-          onMouseMove={startX ? handleMouseMove : undefined}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          data-dragging={position?.x < 0 ? "left" : position?.x > 0 ? "right" : ""}
-        >
+        <div className="card-container">
           <Card className="swipe-card">
             <SwipeCard
               user={user}

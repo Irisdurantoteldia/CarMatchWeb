@@ -10,6 +10,20 @@ import {
 import UserSchedule from "./UserSchedule";
 
 const SwipeCard = ({ user, detailedView, onToggleDetailedView }) => {
+  const getLocationName = (locationId) => {
+    const locations = {
+      'poligon_riu_dor': "Polígon industrial Riu d'Or - Casa Nova",
+      'poligon_llobregat': 'Polígon industrial Llobregat - Torroella',
+      'poligon_santaanna': 'Polígon industrial Santa Anna',
+      'poligon_santisidre': 'Polígon industrial Sant Isidre',
+      'poligon_laserreta': 'Polígon industrial La Serreta',
+      'poligon_labobila': 'Polígon industrial La Bòbila',
+      'poligon_elgrau': 'Polígon industrial El Grau',
+      'poligon_carretera_berga': 'Polígon industrial Carretera de Berga',
+      'poligon_carretera_dartes': "Polígon Carretera d'Artés"
+    };
+    return locations[locationId] || locationId;
+  };
   const renderScheduleSummary = () => {
     if (!user.detailedSchedule || !user.detailedSchedule.days || user.detailedSchedule.days.length === 0) {
       return <p className="no-schedule">No hi ha horari disponible</p>;
@@ -67,14 +81,14 @@ const SwipeCard = ({ user, detailedView, onToggleDetailedView }) => {
           {user.location && (
             <div className="info-item">
               <EnvironmentOutlined />
-              <span className="info-text">{user.location}</span>
+              <span className="info-text">{getLocationName(user.location)}</span>
             </div>
           )}
 
           {user.desti && (
             <div className="info-item">
               <EnvironmentOutlined />
-              <span className="info-text">Destí: {user.desti}</span>
+              <span className="info-text">Destí: {getLocationName(user.desti)}</span>
             </div>
           )}
 

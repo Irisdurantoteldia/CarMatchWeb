@@ -142,24 +142,41 @@ const SavedRoutes = () => {
       title: 'Ruta',
       dataIndex: 'route',
       key: 'route',
-      render: (_, record) => (
-        <div className="route-info">
-          <div className="route-horizontal">
-            <div className="location">
-              <EnvironmentOutlined className="location-icon" />
-              <Text strong>{record.from}</Text>
-            </div>
-            <div className="route-arrow">
-              <div className="arrow-line"></div>
-              <div className="arrow-point"></div>
-            </div>
-            <div className="location">
-              <EnvironmentOutlined className="location-icon" />
-              <Text strong>{record.to}</Text>
+      render: (_, record) => {
+        const getLocationName = (locationId) => {
+          const locations = {
+            'poligon_riu_dor': 'Polígon industrial Riu d\'Or - Casa Nova',
+            'poligon_llobregat': 'Polígon industrial Llobregat - Torroella',
+            'poligon_santaanna': 'Polígon industrial Santa Anna',
+            'poligon_santisidre': 'Polígon industrial Sant Isidre',
+            'poligon_laserreta': 'Polígon industrial La Serreta',
+            'poligon_labobila': 'Polígon industrial La Bòbila',
+            'poligon_elgrau': 'Polígon industrial El Grau',
+            'poligon_carretera_berga': 'Polígon industrial Carretera de Berga',
+            'poligon_carretera_dartes': 'Polígon Carretera d\'Artés'
+          };
+          return locations[locationId] || locationId;
+        };
+        
+        return (
+          <div className="route-info">
+            <div className="route-horizontal">
+              <div className="location">
+                <EnvironmentOutlined className="location-icon" />
+                <Text strong>{getLocationName(record.from)}</Text>
+              </div>
+              <div className="route-arrow">
+                <div className="arrow-line"></div>
+                <div className="arrow-point"></div>
+              </div>
+              <div className="location">
+                <EnvironmentOutlined className="location-icon" />
+                <Text strong>{getLocationName(record.to)}</Text>
+              </div>
             </div>
           </div>
-        </div>
-      ),
+        );
+      },
       width: 400,
     },
     {
