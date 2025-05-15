@@ -35,6 +35,14 @@ const SwipeCard = ({ user, detailedView, onToggleDetailedView }) => {
     );
   };
 
+  // Calculem les places disponibles basant-nos en els viatges actius
+  const calculateAvailableSeats = () => {
+    if (!user.carInfo || !user.activeTrips) return 0;
+    const totalSeats = user.carInfo[2];
+    const occupiedSeats = user.activeTrips.length;
+    return totalSeats - occupiedSeats;
+  };
+
   return (
     <div className="swipe-card-content">
       {/* Sección superior con foto e información del usuario */}
@@ -80,7 +88,9 @@ const SwipeCard = ({ user, detailedView, onToggleDetailedView }) => {
               </div>
               <div className="info-item">
                 <TeamOutlined />
-                <span className="info-text">{user.carInfo[2]} places</span>
+                <span className="info-text">
+                  {calculateAvailableSeats()} places disponibles de {user.carInfo[2]}
+                </span>
               </div>
             </>
           )}
