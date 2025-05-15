@@ -434,3 +434,14 @@
     height: 120px;
   }
 }
+
+.logout-button {
+  background-color: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+  color: white !important;
+}
+
+.logout-button:hover {
+  background-color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}

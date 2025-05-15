@@ -7,7 +7,8 @@ import {
   PhoneOutlined, 
   KeyOutlined,
   QuestionCircleOutlined,
-  SettingOutlined
+  SettingOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 import { getUserById } from "../../Services/userService";
 import { auth, db } from "../../FireBase/FirebaseConfig";
@@ -80,6 +81,17 @@ const Account = () => {
     navigate("/settings");
   };
 
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      navigate("/login");
+      message.success("Has tancat la sessió correctament");
+    } catch (error) {
+      console.error("Error tancant la sessió:", error);
+      message.error("No s'ha pogut tancar la sessió");
+    }
+  };
+
   if (loading) {
     return (
       <Layout className="account-layout">
@@ -109,20 +121,37 @@ const Account = () => {
         {/* Profile Section - Area: profile */}
         {userId === auth.currentUser?.uid && (
           <Card className="role-switcher">
-            <Space size="large">
-              <Button
-                type={user?.role === "Conductor" ? "primary" : "default"}
-                icon={<CarOutlined />}
-                onClick={() => handleRoleSwitch("Conductor")}
+            <Space size="large" direction="vertical" style={{ width: '100%' }}>
+              <Space size="large">
+                <Button
+                  type={user?.role === "Conductor" ? "primary" : "default"}
+                  icon={<CarOutlined />}
+                  onClick={() => handleRoleSwitch("Conductor")}
+                >
+                  Conductor
+                </Button>
+                <Button
+                  type={user?.role === "Passatger" ? "primary" : "default"}
+                  icon={<UserOutlined />}
+                  onClick={() => handleRoleSwitch("Passatger")}
+                >
+                  Passatger
+                </Button>
+              </Space>
+              <div style={{ 
+                width: '100%', 
+                height: '2px', 
+                background: '#e8e8e8',
+                margin: '23px 0'
+              }} />
+              <Button 
+                danger
+                icon={<LogoutOutlined />}
+                onClick={handleLogout}
+                block
+                className="logout-button"
               >
-                Conductor
-              </Button>
-              <Button
-                type={user?.role === "Passatger" ? "primary" : "default"}
-                icon={<UserOutlined />}
-                onClick={() => handleRoleSwitch("Passatger")}
-              >
-                Passatger
+                Tancar Sessió
               </Button>
             </Space>
           </Card>
